@@ -1,0 +1,46 @@
+From 5cb4e3e4564c984070c09ace839d720dbca616c9 Mon Sep 17 00:00:00 2001
+From: Lukas Bals <mail@lukasbals.at>
+Date: Tue, 19 Oct 2021 11:16:40 +0200
+Subject: [PATCH] Add cryptographicallyRandomString snippet
+
+---
+ snippets/cryptographicallyRandomString.md | 30 +++++++++++++++++++++++
+ 1 file changed, 30 insertions(+)
+ create mode 100644 snippets/cryptographicallyRandomString.md
+
+diff --git a/snippets/cryptographicallyRandomString.md b/snippets/cryptographicallyRandomString.md
+new file mode 100644
+index 000000000..8fb8fe3d0
+--- /dev/null
++++ b/snippets/cryptographicallyRandomString.md
+@@ -0,0 +1,30 @@
++---
++title: cryptographicallyRandomString
++tags: browser,random,advanced
++firstSeen: 2021-10-19T05:00:00-04:00
++---
++
++Generates a cryptographically random string with a given length.
++
++- Uses `window.crypto.getRandomValues` to get an array of random `Uint8` values.
++- Translates the `Uint8Array` to a string using modulo.
++
++```js
++const charset =
++  '0123456789ABCDEFGHIJKLMNOPQRSTUVXYZabcdefghijklmnopqrstuvwxyz+/';
++
++const cryptographicallyRandomString = (length) => {
++  const randoms = new Uint8Array(length);
++  window.crypto.getRandomValues(randoms);
++
++  let result = '';
++  randoms.forEach((random) => {
++    result += charset.charAt(random % charset.length);
++  });
++  return result;
++};
++```
++
++```js
++cryptographicallyRandomString(10); // '6LhAQSUTVo'
++```
